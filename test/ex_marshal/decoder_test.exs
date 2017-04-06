@@ -369,6 +369,18 @@ defmodule ExMarshalDecoderTest do
     end
   end
 
+  test "decode OK" do
+    string = "BAh7CzoNb3JpZ2luYWx7CDoKd2lkdGhpAvICOgtoZWlnaHRpArgCOglzaXpl\naQP/iwY6DHByZXZpZXd7CDsGaQJeATsHaQJDATsIaQMvHgI6CnRodW1iewg7\nBml8OwdpczsIaQLQVjoKc21hbGx7CDsGaXM7B2lzOwhpAmJhOgtub3JtYWx7\nCDsGaQIEATsHaQIEATsIaQOJYAE6CmdyZWF0ewg7BmkCRAI7B2kCFwI7CGkD\nKcoE\n"
+
+    assert ExMarshal.decode(Base.decode64!(string, ignore: :whitespace)) == %{
+      great: %{height: 535, size: 313897, width: 580},
+      normal: %{height: 260, size: 90249, width: 260},
+      original: %{height: 696, size: 429055, width: 754},
+      preview: %{height: 323, size: 138799, width: 350},
+      small: %{height: 110, size: 24930, width: 110},
+      thumb: %{height: 110, size: 22224, width: 119}
+    }
+  end
 
   test "raises exception for non-supported symbol" do
     ruby_encoded = File.read!("./test/fixtures/regexp.bin")
